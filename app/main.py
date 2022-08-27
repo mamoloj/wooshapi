@@ -7,7 +7,7 @@ from typing import Optional , List
 from urllib import response
 from fastapi import FastAPI, Response , status , HTTPException , Depends
 from fastapi.params import Body
-from pydantic import BaseModel
+from pydantic import BaseModel 
 from urllib3 import Retry #helps us to validate data
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -17,7 +17,7 @@ from .database import engine , get_db
 from sqlalchemy.orm import Session
 from .routers import user , post , auth , woosh5
 from fastapi.middleware.cors import CORSMiddleware
-
+from .config import settings
 
 
 # models.Base.metadata.create_all(bind=engine)
@@ -34,7 +34,7 @@ app.add_middleware(
 
 while True :
     try:
-        conn = psycopg2.connect(host="localhost",database="production",user="postgres",password="password",cursor_factory=RealDictCursor)
+        conn = psycopg2.connect(host=settings.database_hostname,database=settings.database_name,user=settings.database_username,password=settings.database_password,cursor_factory=RealDictCursor)
         cursor = conn.cursor()
         print("database connection was successful")
         break
