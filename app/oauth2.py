@@ -1,10 +1,8 @@
-from base64 import encode
-from msilib import schema
+
 from fastapi import Depends , status , HTTPException
 from jose import JWTError , jwt
 from datetime import datetime , timedelta
 
-from urllib3 import Retry
 from . import schemas
 from fastapi.security import OAuth2PasswordBearer
 
@@ -40,6 +38,4 @@ def verify_access_token(token : str , credentials_exception):
 
 def get_current_user(token:str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(status_code = status.HTTP_401_UNAUTHORIZED,detail=f"Could not validate credentials" ,headers={"WWW-Authenticate" : "Bearer"})
-    print(token)
-    print(credentials_exception)
     return verify_access_token(token,credentials_exception)
