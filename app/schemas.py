@@ -48,7 +48,7 @@ class WooshieScoresResponse(BaseModel):
     name : Optional[str]
     email : str
     score : Optional[int]
-    total_score : Optional[int]
+    total_score_today : Optional[int]
     description : str
     created_date : datetime
     #is class is use to allow orm type response not just dict type 
