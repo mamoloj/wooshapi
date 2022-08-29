@@ -32,11 +32,16 @@ app.add_middleware(
     allow_methods=["get"],
     allow_headers=["*"],
 )
-
+keepalive_kwargs = {
+    "keepalives": 1,
+    "keepalives_idle": 30,
+    "keepalives_interval": 5,
+    "keepalives_count": 5,
+}
 
 while True :
     try:
-        conn = psycopg2.connect(host=settings.database_hostname,database=settings.database_name,user=settings.database_username,password=settings.database_password,cursor_factory=RealDictCursor)
+        conn = psycopg2.connect(host=settings.database_hostname,database=settings.database_name,user=settings.database_username,password=settings.database_password,**keepalive_kwargs,cursor_factory=RealDictCursor)
         cursor = conn.cursor()
         print("database connection was successful")
         break
