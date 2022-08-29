@@ -39,7 +39,7 @@ def get_wooshie_user(db: Session = Depends(get_db)):
 #def get_wooshie_user(db: Session = Depends(get_db), current_user : str = Depends(get_current_username)):
     main.cursor.execute("""
         select u.name as name , org.organization_name as organization_name from accounts_user as u
-        left join accounts_organization as org ON org.id = u.organizaion_id limit 1000;
+        left join accounts_organization as org ON org.id = u.organizaion_id limit 500;
     """)
     users  = main.cursor.fetchall()
     return  users
@@ -51,7 +51,7 @@ def get_wooshie_score(db: Session = Depends(get_db)):
         select  u.name as name , u.email as email , wh.score as score, uwh.score as total_score_today ,  wh.description as description, created_date as created_date  from accounts_userwooshiehistory wh
         left join accounts_user u ON u.id = wh.user_id 
         left join accounts_userwooshie uwh ON uwh.id = wh.wooshie_id
-        order by created_date limit 1000;
+        order by created_date limit 500;
     """)
     scores  = main.cursor.fetchall()
     return  scores
@@ -64,7 +64,7 @@ def get_wooshie_exercise(db: Session = Depends(get_db)):
         select u.name as name , x.title as title , x.description as description, pl.name as plan , ux.start_date as start_date , ux.day as day, ux.is_done as is_done from exercise_userexercise ux 
         left join accounts_user u ON u.id = ux.user_id
         left join exercise_exercise x ON x.id = ux.exercise_id
-        left join goal_plan pl ON pl.id = ux.plan_id limit 1000;
+        left join goal_plan pl ON pl.id = ux.plan_id limit 500;
     """)
     exercise  = main.cursor.fetchall()
     return  exercise
