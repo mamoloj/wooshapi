@@ -21,6 +21,8 @@ from .config import settings
 
 
 # models.Base.metadata.create_all(bind=engine)
+#uvicorn --host 0.0.0.0 app.main:app 
+
 app = FastAPI()
 
 app.add_middleware(
